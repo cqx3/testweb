@@ -1,0 +1,50 @@
+<!--
+@require "index.js"
+-->
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>云南中烟防伪验真平台V2.0</title>
+    <link rel="import" href="../tpl/header/header.html?__inline">
+</head>
+<body class="index-bg">
+    <div id="app" v-cloak class="flex-wrap">
+        <img class="index-cloud" src="index-left.png"/>
+        <p class="index-top-p" v-html="title"></p>
+        <div class="index-msg">
+            <img class="horn" src="horn.png"/>
+            <div class="scroll-block">
+                <ul id="scroll" class="index-scroll">
+                    <li v-for="item in list" >{{item}}</li>
+                </ul>
+            </div>
+            <div id="scrollDiv" class="scroll-right">
+                <div class="scroll-right-block" id="ad-marquree">
+                    <p class="li" v-for="item in prize">{{item}}</p>
+                </div>
+            </div>
+        </div>
+        <p class="index-top-p2">当前积分:<span>{{hasPoint}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;抽奖所需积分:<span>{{usePoint}}</span></p>
+        <p style="clear: both;"></p>
+        <div class="index-turnplate">
+            <img src="turnplate.png" alt=""/>
+            <img class="index-prize" id="index-prize" src="index-prize.png" alt=""/>
+            <img class="index-lottery" id="startGameBtn" @click="checkActivity" src="lottery.png" alt=""/>
+            <img class="index-this" src="this.png" />
+        </div>
+        <div class="index-regular">
+            <span class="spanleft"></span>
+            <span class="index-button" @click="open('service')">服务说明</span>
+            <span class="index-round"></span>
+            <span class="index-button" @click="linkTo('member')">用户中心</span>
+            <span class="index-round"></span>
+            <span class="index-button" @click="open('leaguer')">会员权益</span>
+            <span class="index-round"></span>
+            <span class="index-button" @click="open('rule')">活动规则</span>
+            <span class="spanright"></span>
+        </div>
+    </div>
+    <link rel="import" href="../tpl/footer18/footer18.html?__inline">
+</body>
+</html>

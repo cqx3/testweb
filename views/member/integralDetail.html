@@ -1,0 +1,66 @@
+<!--
+@require "integralDetail.js"
+-->
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>云南中烟防伪验真平台V2.0</title>
+    <link rel="import" href="../tpl/header/header.html?__inline">
+</head>
+<body class="integralDetail-bg">
+<div id="app" v-cloak >
+    <img src="backIcon.png" class="goback" onclick="history.go(-1);" alt=""/>
+    <div class="integral-title">
+        <p class="Detail-name">积分明细</p>
+        <div class="titleMain" :class="{ titleMainOut:isOut }">
+            <div class="titleIn" @click="inCome" >
+                <p>&nbsp;&nbsp;收入</p>
+            </div>
+            <div class="titleOut" @click="expend" >
+                <p>&nbsp;&nbsp;支出</p>
+            </div>
+        </div>
+    </div>
+    <!--收入-->
+    <div class="integral-content" :class="{ inScroll:!isInShow }" v-if="!isOut">
+        <div style="text-align: center;" v-if="Inlength==0">暂无积分收入</div>
+        <ul class="listUl" :class="{ inhidden:isInShow }" v-if="Inlength>0">
+            <li>
+                <div class="tableDiv" v-for="el in Inarray">
+                    <span class="time">{{el.ctime | time}}</span>
+                    <span class="detail">验真积分收入</span>
+                    <span class="integral">+{{el.mall_point}}分</span>
+                </div>
+            </li>
+
+            <div class="clearfix"></div>
+        </ul>
+        <div class="downRed"  @click="openInList" v-if="isInShow&&Inlength>10">
+            <p>点击加载全部</p>
+            <img src="downRed.png" alt=""/>
+        </div>
+    </div>
+    <!--支出-->
+    <div class="integral-content" :class="{ inScroll:!isOutShow }" v-if="isOut">
+        <div style="text-align: center;" v-if="Outlength==0">暂无积分支出</div>
+        <ul class="listUl" :class="{ inhidden:isOutShow }" v-if="Outlength>0">
+            <li>
+                <div class="tableDiv" v-for="el in Outarray" >
+                    <span class="time">{{el.createDate | time}}</span>
+                    <span class="detail">{{el.pointUse}}</span>
+                    <span class="integral">-{{el.point}}分</span>
+                </div>
+            </li>
+
+            <div class="clearfix"></div>
+        </ul>
+        <div class="downRed"  @click="openOutList" v-if="isOutShow&&Outlength>10">
+            <p>点击加载全部</p>
+            <img src="downRed.png" alt=""/>
+        </div>
+    </div>
+    <link rel="import" href="../tpl/footer18/footer18.html?__inline">
+</div>
+</body>
+</html>

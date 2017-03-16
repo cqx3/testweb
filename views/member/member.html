@@ -1,0 +1,150 @@
+<!--
+@require "member.js"
+-->
+<!DOCTYPE html>
+<html class="h100">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>云南中烟防伪验真平台V2.0</title>
+    <link rel="import" href="../tpl/header/header.html?__inline">
+</head>
+<body class="member-bg">
+<div id="app" v-cloak class="h100">
+    <div class="people-content">
+        <img src="mpeople.png" alt=""/>
+        <p class="phone">电话：{{phone}}</p>
+        <p class="capion">&nbsp;<span v-if="scanCount>4">温馨提示：过量吸烟损害健康</span>&nbsp;</p>
+    </div>
+    <div class="nav" v-if="jdIsShow != 1">
+        <ul>
+            <li @click="ToIntegral"><p>积分明细<span class="integral-icon"></span></p></li>
+            <li> <p>已用积分<br>{{gainNum-hasPoint}}分</p></li>
+            <li><p>剩余积分<br>{{hasPoint}}分</p></li>
+            <div class="clearfix"></div>
+        </ul>
+    </div>
+    <div class="content-list" :class="{ inScroll:!isShow }">
+        <div style="text-align: center;padding-top:10%;" v-if="arraylength==0">暂无中奖记录</div>
+        <ul class="listUl" :class="{inhidden:isShow,'wxlisttop':wxind}"  v-if="arraylength>0" >
+            <li v-if="jdIsShow != 1" class="backgnonebak">
+                <div class="textDiv"><span>开福袋赢京东金融好礼</span></div>
+                <div class="detailsBtn"><span @click="jd">参与活动</span></div>
+            </li>
+            <li v-for="item in array">
+                <!--S 1311要加“京东福袋”-->
+                <div class="display-initial" v-if="item.prizeType==1311">
+                    <div class="textDiv"><span>京东金融{{item.prizeName}}</span></div>
+                    <div class="detailsBtn"><span @click="JDdetails(item)">详情</span></div>
+                </div>
+                <!--E 1311要加“京东福袋”-->
+
+                <!--S 未领取的实物1301-->
+                <div class="display-initial" v-if="item.prizeType==1301&&item.useStatus==0">
+                    <div class="textDiv"><span>{{item.prizeName}}</span></div>
+                    <div class="detailsBtn">
+                        <span class="havedate" v-if="timestamp<item.expireTime" @click="LinkToResult(item)">可领取</span>
+                        <span class="gray" v-if="timestamp>item.expireTime">已过期</span>
+                        <p v-if="timestamp<item.expireTime">{{item.expireTime | time}}到期</p>
+                    </div>
+                </div>
+                <!--E 未领取的实物1301-->
+
+                <!--S 已领取的实物1301可以点击-->
+                <div class="display-initial" v-if="item.prizeType==1301&&item.useStatus==1" @click="Info(item)">
+                    <div class="textDiv"><span>{{item.prizeName}}</span></div>
+                    <div class="detailsBtn">
+                        <span class="gray">已领取</span>
+                    </div>
+                </div>
+                <!--E 已领取的实物1301可以点击-->
+
+                <!--S 1304卡券-->
+                <div class="display-initial" v-if="item.prizeType==1304">
+                    <div class="textDiv"><span>{{item.prizeName}}</span></div>
+                    <div class="detailsBtn">
+                        <span class="havedate" v-if="item.useStatus==0&&timestamp<item.expireTime" @click="LinkToExt(item)">可领取</span>
+                        <span class="gray" v-if="timestamp>item.expireTime">已过期</span>
+                        <p v-if="timestamp<item.expireTime">{{item.expireTime | time}}到期</p>
+                    </div>
+                </div>
+                <!--E 1304卡券-->
+
+                <!--S 1313微信红包-->
+                <div class="display-initial" v-if="item.prizeType==1313">
+                    <div class="textDiv"><span>{{item.prizeName}}</span></div>
+                    <div class="detailsBtn">
+                        <span class="havedate" v-if="item.useStatus==0&&timestamp<item.expireTime" @click="LinkToredpacket(item)">可领取</span>
+                        <p v-if="item.useStatus==0&&timestamp<item.expireTime">{{item.expireTime | time}}到期</p>
+                        <span class="gray" v-if="item.useStatus==1">已领取</span>
+                        <span class="gray" v-if="timestamp>item.expireTime">已过期</span>
+                    </div>
+                </div>
+                <!--E 1313微信红包-->
+
+                <!--S 未领取的评测师1312-->
+                <div class="display-initial" v-if="item.prizeType==1312&&item.useStatus==0">
+                    <div class="textDiv"><span>{{item.prizeName}}</span></div>
+                    <div class="detailsBtn">
+                        <span class="havedate" v-if="timestamp<item.expireTime" @click="LinkTopcs(item)">可领取</span>
+                        <span class="gray" v-if="timestamp>item.expireTime">已过期</span>
+                        <p v-if="timestamp<item.expireTime">{{item.expireTime | time}}到期</p>
+                    </div>
+                </div>
+                <!--E 未领取的评测师1312-->
+
+                <!--S 已领取的评测师1312-->
+                <div class="display-initial" v-if="item.prizeType==1312&&item.useStatus==1" @click="Info(item)">
+                    <div class="textDiv"><span>{{item.prizeName}}</span></div>
+                    <div class="detailsBtn">
+                        <span class="gray">已领取</span>
+                    </div>
+                </div>
+                <!--E 已领取的评测师1312-->
+
+                <!--S 其它-->
+                <div class="display-initial" v-if="item.prizeType!=1311&&item.prizeType!=1301&&item.prizeType!=1304&&item.prizeType!=1313&&item.prizeType!=1312">
+                    <div class="textDiv"><span>{{item.prizeName}}</span></div>
+                    <div class="detailsBtn">
+                        <span v-if="item.useStatus==0&&timestamp<item.expireTime" @click="LinkToResult(item)">可领取</span>
+                        <p v-if="timestamp<item.expireTime">{{item.expireTime | time}}到期</p>
+                        <span v-if="item.useStatus==1" class="gray">已领取</span>
+                        <span class="gray" v-if="timestamp>item.expireTime">已过期</span>
+                    </div>
+                </div>
+                <!--E 其它-->
+
+                <!--<div class="textDiv" v-if="item.prizeType!=1311&&item.prizeType!=1301&&item.prizeType!=1313"><span>{{item.prizeName}}</span></div>
+                <div class="textDiv" v-if="item.prizeType==1311&&item.prizeType!=1301&&item.prizeType!=1313"><span>京东福袋{{item.prizeName}}</span></div> &lt;!&ndash;1311要加“京东福袋”&ndash;&gt;
+                <div class="textDiv" v-if="item.useStatus==0&&item.prizeType!=1311&&item.prizeType!=1313&&item.prizeType==1301"><span>{{item.prizeName}}</span></div>
+                <div class="textDiv" v-if="item.useStatus==1&&item.prizeType==1301&&item.prizeType!=1313" @click="Info(item)"><span>{{item.prizeName}}</span></div> &lt;!&ndash;已领取的实物1301可以点击&ndash;&gt;
+
+
+            &lt;!&ndash;end name 左侧&ndash;&gt;
+                <div class="detailsBtn" v-if="item.useStatus==0&&timestamp<item.expireTime&&item.prizeType!=1311"> &lt;!&ndash;到期（不包含福袋）&ndash;&gt;
+                    <span class="havedate" @click="LinkToResult(item)" v-if="item.prizeType!=1304">可领取</span>  &lt;!&ndash;非卡券跳至领取页&ndash;&gt;
+                    <span class="havedate" @click="LinkToExt(item)" v-if="item.prizeType==1304">可领取</span>  &lt;!&ndash;卡券跳至ext&ndash;&gt;
+                    <p>{{item.expireTime | time}}到期</p>
+                </div>
+
+                <div class="detailsBtn" v-if="item.prizeType==1311" ><span @click="JDdetails(item)">详情</span></div> &lt;!&ndash;福袋&ndash;&gt;
+
+                <div class="detailsBtn" v-if="item.useStatus==1&&item.prizeType!=1301"> &lt;!&ndash;非实物&ndash;&gt;
+                    <span class="gray" >已领取</span>
+                </div>
+                <div class="detailsBtn" v-if="item.useStatus==1&&item.prizeType==1301"  @click="Info(item)"> &lt;!&ndash;实物&ndash;&gt;
+                    <span class="gray" >已领取</span>
+                </div>
+
+                <div class="detailsBtn" v-if="timestamp>item.expireTime&&item.useStatus==0"> &lt;!&ndash;未领取且已过期&ndash;&gt;
+                    <span class="gray">已过期</span>
+                </div>
+            &lt;!&ndash;end Btn 右侧&ndash;&gt;-->
+            </li>
+            <div class="clearfix"></div>
+            <div class="downicon" @click="openList" v-if="!isLastPage && array.length!=0"><img src="downicon.png" alt=""/></div>
+        </ul>
+    </div>
+    <link rel="import" href="../tpl/footer18/footer18.html?__inline">
+</div>
+</body>
+</html>

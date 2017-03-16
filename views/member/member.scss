@@ -1,0 +1,157 @@
+@import "../../components/common/base";
+%mar0auto {  margin:0 auto;  }
+%textCenter { text-align: center  }
+.member-bg{
+  width: 100%;
+  height: 100%;
+  background: url('memberbg.png') no-repeat;
+  background-size: 100% 100%;
+  .people-content {
+    width: 100%;
+    padding-top: pxToRem(12);
+    img {
+      width: pxToRem(66);
+      @extend %mar0auto;
+    }
+    .phone {
+      @extend %textCenter;
+      color: #fff;
+      font-size: pxToRem(16);
+      padding-top: pxToRem(6);
+    }
+    .capion {
+      @extend %textCenter;
+      color: #FFE471;
+      font-size: pxToRem(9);
+      padding-bottom: pxToRem(5);
+    }
+  }
+  .nav {
+    padding-bottom: pxToRem(7);
+    ul {
+      width: 100%;
+      li {float: left;width: 30%;height:40px;background: #FFF5D7;@extend %textCenter;margin-left: 2.5%;
+        p {font-size: pxToRem(11);color:#DB020A;height: 20px;line-height: 20px;}
+      }
+      li:first-child {
+        p {line-height: 40px;}
+        span.integral-icon {
+             background: url('jiantou.png') no-repeat; background-size: 100% 100%;
+             width: 15px; height: 15px; display: inline-block;margin-left: 5px;
+             vertical-align: middle;
+        }
+      }
+    }
+  }
+  .content-list {
+    height: 58%;
+    ul.listUl {
+      overflow-y: auto;
+      position: absolute;
+      bottom: 4rem;
+      top: 9.5rem;
+      width: 100%;
+    }
+    ul.listUl.wxlisttop{
+      top: 6.5rem;
+    }
+    li {width: 100%;height: 18%;background: #fff;float: left;margin-bottom: 2%;background: url("prizeListBg.png") no-repeat;background-size: 100% 100%;
+      .textDiv { display:table;height: 100%;padding-left: 8%;float: left;width: 50%;
+        span {font-size: pxToRem(15.6);display:table-cell;vertical-align:middle;color: #2C2D31;}
+      }
+      .detailsBtn {float:right; height: 100%;width: 40%;position: relative;
+        span {border-radius: pxToRem(13);background: #E40100;color: #fff;display:inline-block;width: 60%;margin-left:10%;height:26px;line-height:26px;@extend %textCenter;position: absolute;top:50%;margin-top:-13px;}
+        span.havedate {top:35%;}
+        span.gray {background: #9C9C9C}
+        p {position: absolute;bottom: 5%;width: 82%;@extend %textCenter;font-size: pxToRem(10);color: #2C2D31;}
+      }
+    }
+    li.backgnonebak {
+      background: url("jdBg.png") no-repeat;background-size: 100% 100%;
+      .textDiv { span {color: #DF0100;} }
+    }
+  }
+  .downicon{width: 7%;height: 10%;@extend %mar0auto; margin-top: 1%;}
+
+}
+.integralDetail-bg{
+  width: 100%;
+  height: 100%;
+  background: url('integralDetailBg.png') no-repeat;
+  background-size: 100% 100%;
+  .goback {
+    position: fixed;
+    width: 10%;
+    top: 0;
+    left: 0;
+  }
+  .integral-title {
+    height: 14%;
+    p{
+      @extend %textCenter;
+      color: #fff;
+      font-size: pxToRem(18);
+      padding: 3% 0;
+    }
+    .titleMain {
+      width: 100%;height: 34%;background: url("inBg.jpg") no-repeat;background-size: 100% 100%;
+      .titleIn {width: 50%;float: left;height: 100%;display: table;
+          p {padding: 0;font-size: pxToRem(14);
+            display: table-cell;
+            vertical-align: middle;height: 100%;}
+      }
+      .titleOut {width: 50%;float: right;height: 100%;display: table;
+        p {padding: 0;font-size: pxToRem(14);
+          display: table-cell;
+          vertical-align: middle; height: 100%;}
+      }
+    }
+  }
+  .integral-content {
+    width: 95%;margin: 2% auto 5%;
+    padding: 10% 8% 0%;
+    height: 66.5%;
+    background: url("kuangBg.jpg") no-repeat;
+    background-size: 100% 100%;
+    ul.listUl {height: 80%;
+      li {height: 10%;
+        .tableDiv {
+          height: 100%;display: table;width: 100%;
+          span { display: table-cell;vertical-align: middle;}
+          .time {width: 33%;}
+          .detail {width: 47%;@extend %textCenter;}
+          .integral {width: 20%;text-align: right;}
+        }
+      }
+    }
+    .downRed {
+      padding-top: 5%;
+      p {@extend %textCenter;color: #E32A05;font-size: pxToRem(11);font-weight: bold;}
+      img {    width: 10%; @extend %mar0auto}
+    }
+
+  }
+}
+.winning-text {
+  background: url("../index/dia-top.png") top left no-repeat;
+  background-size: 100%;
+  background-color: #FEFAEA;
+  padding: 8% 0 0;
+  p {text-align: left;width: 80%;@extend %mar0auto;font-size: pxToRem(10);padding: pxToRem(5) 0;}
+}
+.winningMain .ui-dialog-wrap .ui-dialog-footer{
+  background: url("../index/dia-bottom.png") bottom left no-repeat;
+  background-color: #FEFAEA;
+  background-size: 100%;
+  height: pxToRem(100);
+}
+.warning {padding-top: 2%;p{@extend %textCenter;color:#F8DEBE;font-size: pxToRem(10);}}
+.inScroll {overflow-y: scroll!important;-webkit-overflow-scrolling: touch;}
+.inhidden {overflow: hidden;}
+.titleMainOut {background: url("outBg.jpg") no-repeat!important;background-size: 100% 100%!important;}
+.h100 {height: 100%;}
+.display-initial{display: initial;}
+
+.member-bg .content-list li.backgnone:first-child{
+  background: none;
+}
